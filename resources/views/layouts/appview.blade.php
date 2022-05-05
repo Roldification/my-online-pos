@@ -23,9 +23,12 @@
     <div id="app">
         <div class="grid grid-cols-6 h-full">
             <div class="h-full">
+                @if (Auth::check())
                 <side-navigation>
 
                 </side-navigation>
+                @endif
+                
             </div>
             <div class="container col-span-5">
                 @yield('content')

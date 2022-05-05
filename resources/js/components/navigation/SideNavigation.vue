@@ -2,11 +2,11 @@
     <el-row>
   <el-col :span="24">
     <el-menu
-      default-active="2"
+      default-active="1"
       class="el-menu-vertical-demo"
       @open="handleOpen"
       @close="handleClose">
-      <el-submenu index="1">
+      <!-- <el-submenu index="1">
         <template slot="title">
           <i class="el-icon-location"></i>
           <span>Navigator One</span>
@@ -22,7 +22,11 @@
           <template slot="title">item four</template>
           <el-menu-item index="1-4-1">item one</el-menu-item>
         </el-submenu>
-      </el-submenu>
+      </el-submenu> -->
+      <el-menu-item index="1">
+        <i class="el-icon-menu"></i>
+        <span>Dashboard</span>
+      </el-menu-item>
       <el-menu-item index="2">
         <i class="el-icon-menu"></i>
         <span>Navigator Two</span>

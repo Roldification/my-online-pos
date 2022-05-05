@@ -24,6 +24,8 @@ Vue.use(ElementUI, { size: 'small', zIndex: 3000 });
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('side-navigation', require('./components/navigation/SideNavigation.vue').default);
+Vue.component('registration', require('./components/Registration.vue').default);
+Vue.component('login', require('./components/Login.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
