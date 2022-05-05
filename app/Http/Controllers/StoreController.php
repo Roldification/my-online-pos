@@ -21,4 +21,10 @@ class StoreController extends Controller
         $store  = Store::create($data);
         return back();
     }
+
+    public function loadStore(Request $request) {
+        //$request->session()->put('loadedStoreId', 2);
+        session(['loadedStoreId'=>$request->query('storeId')]);
+        return back();
+    }
 }

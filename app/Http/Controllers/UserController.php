@@ -16,7 +16,10 @@ class UserController extends Controller
 
     public function dashboard() {
         $user = Auth::user();
-        return view('welcome', ['user' => $user]);
+        $loadedStore = session('loadedStoreId') ?? false;
+        $stores = $user->stores()->get();
+        // dd($loadedStore);
+        return view('welcome', ['user' => $user, 'stores'=>$stores, 'loadedStore'=>$loadedStore]);
     }
 
     public function login() {
