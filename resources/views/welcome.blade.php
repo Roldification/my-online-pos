@@ -17,7 +17,7 @@
             @else
             <article class="message is-primary">
                 <div class="message-header">
-                  <p>Hi there, {{$loadedStore}}</p>
+                  <p>Hi there, {{$loadedStore!==false ? $loadedStore->name : 'yow' }}</p>
                 </div>
                 <div class="message-body">
                   Below are your available store/s, Let's load it up!

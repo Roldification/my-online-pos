@@ -17,7 +17,9 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
-Route::get('/', [UserController::class, 'dashboard'])->middleware('auth');
+Route::get('/', [UserController::class, 'dashboard'])->middleware('auth')->name('home');
+
+Route::get('/manage-items');
 
 Route::get('/register', [UserController::class, 'register']);
 

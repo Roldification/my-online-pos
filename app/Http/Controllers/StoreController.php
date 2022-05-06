@@ -24,7 +24,9 @@ class StoreController extends Controller
 
     public function loadStore(Request $request) {
         //$request->session()->put('loadedStoreId', 2);
-        session(['loadedStoreId'=>$request->query('storeId')]);
+
+        $store = Store::find($request->query('storeId'));
+        session(['loadedStoreId'=>$store]);
         return back();
     }
 }

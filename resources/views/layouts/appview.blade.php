@@ -25,13 +25,14 @@
     <div id="app" style="height:100%;">
         <div class="columns" style="height: 100%; padding: 15px;">
             <div class="column is-2" style="background-color:white; height: 100%;">
-                @if (Auth::check())
+                @if (Auth::check() && session()->exists('loadedStoreId'))
                 <aside class="menu is-size-7">
                     <p class="menu-label">
                       General
                     </p>
                     <ul class="menu-list">
-                      <li><a>Items Inventory</a></li>
+                      <li><a href="#" class="{{Route::currentRouteName()=='home' ? 'is-active' : ''}}">Home</a></li>
+                      <li><a href="/manage-items" class="{{Route::currentRouteName()=='manage-items' ? 'is-active' : ''}}">Manage Items</a></li>
                       <li><a>Customers</a></li>
                     </ul>
                     <p class="menu-label">
@@ -40,7 +41,7 @@
                     <ul class="menu-list">
                       <li><a>Team Settings</a></li>
                       <li>
-                        <a class="is-active">Manage Your Team</a>
+                        <a class="">Manage Your Team</a>
                         <ul>
                           <li><a>Members</a></li>
                           <li><a>Plugins</a></li>
@@ -63,9 +64,13 @@
                 @endif
                 
             </div>
-            <div class="column">
+            @if (session()->exists('loadedStoreId'))
+              <div class="column is-size-7">
+                Active Store <span class="tag is-primary">{{session('loadedStoreId')->name}}</span>
+              
                 @yield('content')
-            </div>
+              </div>
+            @endif
         </div>
     </div>
     
