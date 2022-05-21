@@ -5,7 +5,6 @@
         weh?    
     @endsection
 
-    <div class="mt-8">
         @section('content')
             @if (count($stores)===0)
                 <example-component
@@ -43,6 +42,6 @@
                 </div>
             @endif
         @endsection
-    </div>
+
     
 </div>

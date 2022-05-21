@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Auth;
 
 Route::get('/', [UserController::class, 'dashboard'])->middleware('auth')->name('home');
 
-Route::get('/manage-items');
+Route::get('/manage-items', [UserController::class, 'viewItemsManagement'])->middleware('auth')->name('manage-items');
 
 Route::get('/register', [UserController::class, 'register']);
 

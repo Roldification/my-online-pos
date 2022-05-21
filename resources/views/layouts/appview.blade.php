@@ -19,58 +19,37 @@
         .message-header {
             padding-bottom: 0em;
         }
+
+        button,
+        [type='button'],
+        [type='reset'],
+        [type='submit'] {
+        -webkit-appearance: button; /* 1 */
+        background-image: none; /* 2 */
+        }
     </style>
 </head>
 <body>
     <div id="app" style="height:100%;">
-        <div class="columns" style="height: 100%; padding: 15px;">
-            <div class="column is-2" style="background-color:white; height: 100%;">
-                @if (Auth::check() && session()->exists('loadedStoreId'))
-                <aside class="menu is-size-7">
-                    <p class="menu-label">
-                      General
-                    </p>
-                    <ul class="menu-list">
-                      <li><a href="#" class="{{Route::currentRouteName()=='home' ? 'is-active' : ''}}">Home</a></li>
-                      <li><a href="/manage-items" class="{{Route::currentRouteName()=='manage-items' ? 'is-active' : ''}}">Manage Items</a></li>
-                      <li><a>Customers</a></li>
-                    </ul>
-                    <p class="menu-label">
-                      Administration
-                    </p>
-                    <ul class="menu-list">
-                      <li><a>Team Settings</a></li>
-                      <li>
-                        <a class="">Manage Your Team</a>
-                        <ul>
-                          <li><a>Members</a></li>
-                          <li><a>Plugins</a></li>
-                          <li><a>Add a member</a></li>
-                        </ul>
-                      </li>
-                      <li><a>Invitations</a></li>
-                      <li><a>Cloud Storage Environment Settings</a></li>
-                      <li><a>Authentication</a></li>
-                    </ul>
-                    <p class="menu-label">
-                      Transactions
-                    </p>
-                    <ul class="menu-list">
-                      <li><a>Payments</a></li>
-                      <li><a>Transfers</a></li>
-                      <li><a>Balance</a></li>
-                    </ul>
-                  </aside>
-                @endif
-                
-            </div>
-            @if (session()->exists('loadedStoreId'))
-              <div class="column is-size-7">
-                Active Store <span class="tag is-primary">{{session('loadedStoreId')->name}}</span>
-              
-                @yield('content')
-              </div>
+        <div class="flex flex-row h-full">
+          <!-- sidenav -->
+          <div class="w-44 h-full bg-red-200">
+            @if (session()->has('loadedStoreId'))
+                <h5 class="text-center font-semibold">{{session('loadedStoreId')->name}}</h5>
             @endif
+            <ul>
+                <li class="cursor-pointer px-2">
+                    Hello     
+                </li>
+                <li class="cursor-pointer px-2">
+                    Manage Items     
+                </li>
+            </ul>
+          </div>
+          <!-- sidenav -->
+          <div class="grow">
+              @yield('content')
+          </div>
         </div>
     </div>
     

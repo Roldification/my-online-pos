@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\StoreController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -20,3 +21,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::post('/create-user', [UserController::class, 'store']);
+Route::post('/save-item-category', [StoreController::class, 'insertCategories']);

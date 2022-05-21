@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ItemCategories;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -47,5 +48,10 @@ class UserController extends Controller
         } else {
             return back()->withInput();
         }
+    }
+
+    public function viewItemsManagement() {
+        $categories = ItemCategories::where('store_id', session('loadedStoreId')->id)->get();
+        return view('items.items_management', ['categories'=>$categories]);
     }
 }
