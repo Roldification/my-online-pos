@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\ItemCategories;
+use App\Models\ItemSubcategories;
 use App\Models\Store;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -41,5 +42,16 @@ class StoreController extends Controller
                 'status'=>'ok',
                 'message'=>$category
             ]);
+    }
+
+    public function getSubCategories(Request $request) {
+        $categoryId = $request->query('id');
+
+        $subCategories = ItemSubcategories::where('item_categories_id', $categoryId)->get();
+
+        return response([
+            'subcategories'=>$subCategories,
+            'categoryId'=>$categoryId
+        ]);
     }
 }

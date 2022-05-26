@@ -48,6 +48,7 @@ export default {
         let retval = res.data
         if (retval.status) {
           this.categories.push(retval.message)
+          this.$emit('doneAdd', retval.message)
         }
 
         vm.isInserting = false
