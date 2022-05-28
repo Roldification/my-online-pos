@@ -54,4 +54,16 @@ class StoreController extends Controller
             'categoryId'=>$categoryId
         ]);
     }
+
+    public function insertSubcategories(Request $request) {
+        $subcategory = new ItemSubcategories;
+        $subcategory->item_categories_id = $request->category_id;
+        $subcategory->name = $request->subcategory_name;
+        $subcategory->save();
+
+        return response([
+            'status'=>'ok',
+            'message'=>$subcategory
+        ]);
+    }
 }

@@ -42,7 +42,7 @@ export default {
       this.isInserting = true
       let vm = this
       window.axios.post('api/save-item-category', {
-        id: 2,
+        id: this.storeId,
         name: this.form.categoryName
       }).then(res=>{
         let retval = res.data

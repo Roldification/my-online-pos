@@ -29,7 +29,7 @@
 
                 </el-option>
             </el-select>
-             <el-button @click="dialogVisible = true" type="primary" icon="el-icon-circle-plus" class="float-right"></el-button>
+             <el-button @click="subcategoriesDialog = true" type="primary" icon="el-icon-circle-plus" class="float-right"></el-button>
             </el-form-item>
 
         </el-form>
@@ -43,9 +43,29 @@
           :destroy-on-close="true"
           width="30%"
           >
-          <manage-categories @doneAdd="doneAdd">
+          <manage-categories :store-id="storeId" @doneAdd="doneAdd">
 
           </manage-categories>
+        </el-dialog>
+        <!-- end of dialog for item categories management -->
+
+        <!-- dialog for item categories management -->
+        <el-dialog
+          title="Manage Item Subcategories"
+          :append-to-body="true"
+          :visible.sync="subcategoriesDialog"
+          :destroy-on-close="true"
+          width="30%"
+          >
+          <manage-subcategories :category-id="item.category" @doneAdd="doneAddSubcategory">
+              <template #selectedCategory>
+                <el-tag
+                  closable
+                  :type="'info'">
+                  {{getSelectedCategory.name}}
+                </el-tag>
+              </template>
+          </manage-subcategories>
         </el-dialog>
         <!-- end of dialog for item categories management -->
     </div>
@@ -54,8 +74,12 @@
 
 <script>
 import _ from 'lodash'
+import ManageSubCategories from '../ManageSubcategories.vue'
 export default {
     props: ['storeId', 'itemCategories'],
+    components: {
+      'manage-subcategories': ManageSubCategories
+    },
     data() {
       return {
           item: {
@@ -66,9 +90,21 @@ export default {
             item_attributes: {}
           },
           dialogVisible: false,
+          subcategoriesDialog: false,
           categories: _.cloneDeep(JSON.parse(this.itemCategories)),
           subcategories: [],
           isSubcategoryLoading: false,
+      }
+    },
+
+    computed: {
+      getSelectedCategory () {
+        let id = this.item.category
+        if (id==null) return {name: ''}
+
+        return _.find(this.categories, (o)=>{
+          return o.id == id
+        })
       }
     },
 
@@ -80,6 +116,12 @@ export default {
         this.item.category = data.id
       },
 
+      doneAddSubcategory (data) {
+        this.subcategoriesDialog = false
+        this.subcategories.push(data)
+        this.item.sub_category_id = data.id
+      },
+
       loadSubCategories () {
         let vm = this
         this.isSubcategoryLoading = true
@@ -89,6 +131,7 @@ export default {
           }
         }).then((result) => {
           if (result.data.subcategories.length) {
+            vm.item.sub_category_id = null
             vm.subcategories = result.data.subcategories
           } else {
             vm.item.sub_category_id = null

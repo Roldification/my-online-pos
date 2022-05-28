@@ -23,3 +23,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('/create-user', [UserController::class, 'store']);
 Route::post('/save-item-category', [StoreController::class, 'insertCategories']);
 Route::get('/get-subcategories', [StoreController::class, 'getSubcategories']);
+Route::post('/save-item-subcategory', [StoreController::class, 'insertSubcategories']);
