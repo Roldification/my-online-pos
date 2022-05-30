@@ -37,6 +37,8 @@ Route::post('/store-store', [StoreController::class, 'store'])->middleware('auth
 
 Route::get('/load-store', [StoreController::class, 'loadStore'])->middleware('auth');
 
+Route::post('/save-item', [StoreController::class, 'insertItem'])->middleware('auth');
+
 // Route::get('/create-user', function (Request $request) {
 //     return 'hello world';
 // });

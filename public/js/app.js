@@ -7546,6 +7546,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -7609,6 +7616,13 @@ __webpack_require__.r(__webpack_exports__);
         }
       })["catch"](function (err) {})["finally"](function () {
         vm.isSubcategoryLoading = false;
+      });
+    },
+    onSubmit: function onSubmit() {
+      window.axios.post('save-item', this.item).then(function (result) {
+        console.log(result.data);
+      })["catch"](function (err) {
+        return console.log(err);
       });
     }
   }
@@ -93991,6 +94005,38 @@ var render = function () {
                   },
                 },
               }),
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "el-form-item",
+            { attrs: { label: "Min. UOM" } },
+            [
+              _c("el-input", {
+                model: {
+                  value: _vm.item.min_uom,
+                  callback: function ($$v) {
+                    _vm.$set(_vm.item, "min_uom", $$v)
+                  },
+                  expression: "item.min_uom",
+                },
+              }),
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "el-form-item",
+            [
+              _c(
+                "el-button",
+                {
+                  attrs: { type: "primary", plain: "" },
+                  on: { click: _vm.onSubmit },
+                },
+                [_vm._v("Create Item")]
+              ),
             ],
             1
           ),

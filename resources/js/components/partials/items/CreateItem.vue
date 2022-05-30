@@ -32,6 +32,13 @@
              <el-button @click="subcategoriesDialog = true" type="primary" icon="el-icon-circle-plus" class="float-right"></el-button>
             </el-form-item>
 
+            <el-form-item label="Min. UOM">
+                <el-input v-model="item.min_uom"> </el-input>
+            </el-form-item>
+
+            <el-form-item>
+              <el-button type="primary" @click="onSubmit" plain>Create Item</el-button>
+            </el-form-item>
         </el-form>
 
 
@@ -143,6 +150,12 @@ export default {
         }).finally(()=>{
           vm.isSubcategoryLoading = false
         });
+      },
+
+      onSubmit () {
+        window.axios.post('save-item', this.item).then(result=>{
+          console.log(result.data)
+        }).catch(err=>console.log(err))
       }
     }
 }

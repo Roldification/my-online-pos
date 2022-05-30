@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\ItemCategories;
+use App\Models\Items;
 use App\Models\ItemSubcategories;
 use App\Models\Store;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class StoreController extends Controller
 {
@@ -64,6 +66,32 @@ class StoreController extends Controller
         return response([
             'status'=>'ok',
             'message'=>$subcategory
+        ]);
+    }
+
+    public function insertItem(Request $request) {
+
+        $validator = Validator::make($request->all(), [
+            'name'=>'required',
+            'category'=>'required',
+            'sub_category_id'=>'required',
+            'min_uom'=>'required'
+        ])->validate();
+        
+
+        // API routes have no fucking clue about shit in the backend.
+
+        $item = new Items;
+        $item->name = $request->name;
+        $item->item_subcategories_id = $request->sub_category_id;
+        $item->stores_id = session('loadedStoreId')->id;
+        $item->min_uom_name = $request->min_uom;
+        $item->item_attributes = json_encode($request->item_attributes);
+        $item->save();
+
+        return response([
+            'status'=>'ok',
+            'message'=>''
         ]);
     }
 }

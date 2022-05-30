@@ -10,7 +10,7 @@
                         Add Item
                     </div>
 
-                    <div class="panel-body h-64 p-2">
+                    <div class="panel-body p-5">
                         <create-item
                          store-id="{{session('loadedStoreId')->id}}"
                          item-categories="{{json_encode($categories)}}"
