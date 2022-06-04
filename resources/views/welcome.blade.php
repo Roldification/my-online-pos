@@ -22,10 +22,10 @@
                   Below are your available store/s, Let's load it up!
                 </div>
               </article>
-                <div class="bg-red-200">
-                    <div class="columns">
+                <div >
+                    <div class="grid grid-cols-12 gap-2 p-2">
                         @foreach ($stores as $item)
-                            <div class="column is-2">
+                            <div class="col-span-2 border-2">
                                 <div class="card">
                                     <header class="card-header">
                                     {{$item->name}}
