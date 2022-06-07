@@ -153,8 +153,18 @@ export default {
       },
 
       onSubmit () {
+        let vm = this
         window.axios.post('save-item', this.item).then(result=>{
-          console.log(result.data)
+          let res = result.data
+          if (res.status=='ok') {
+            vm.item = {
+            name: '',
+            category: null,
+            sub_category_id: null,
+            min_uom: '',
+            item_attributes: {}
+          }
+          }
         }).catch(err=>console.log(err))
       }
     }

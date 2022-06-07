@@ -20,8 +20,17 @@
                     </div> 
                 </div>
             </div>
-            <div class="bg-green-200 grow">
-                afsfd
+            <div class="grow">
+                <div class="panel border-2 rounded-md">
+                    <div class="panel-header bg-blue-600 rounded-t-md px-2 py-1 text-white font-semibold">
+                        Items List
+                    </div>
+
+                    <div class="panel-body p-5">
+                        <items-list>
+                        </items-list>
+                    </div> 
+                </div>
             </div>
         </div>
     </div>

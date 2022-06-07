@@ -9,6 +9,7 @@ import ElementUI from 'element-ui';
 import locale from 'element-ui/lib/locale/lang/en'
 import 'element-ui/lib/theme-chalk/index.css';
 import Vue from 'vue';
+import store from './store'
 
 window.Vue = require('vue').default;
 Vue.use(ElementUI, { size: 'small', zIndex: 3000, locale });
@@ -29,6 +30,7 @@ Vue.component('registration', require('./components/Registration.vue').default);
 Vue.component('login', require('./components/Login.vue').default);
 Vue.component('create-item', require('./components/partials/items/CreateItem.vue').default);
 Vue.component('manage-categories', require('./components/partials/ManageCategories.vue').default);
+Vue.component('items-list', require('./components/partials/items/ItemsList.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -38,4 +40,5 @@ Vue.component('manage-categories', require('./components/partials/ManageCategori
 
 const app = new Vue({
     el: '#app',
+    store: store
 });
