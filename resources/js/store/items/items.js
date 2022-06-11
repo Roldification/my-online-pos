@@ -1,10 +1,16 @@
 import actions from './actions'
+import mutations from './mutations'
 
 const state = () => ({
-  loadedItems: [],
+  itemsPageInfo: {
+    current_page: 1
+  },
+  isPageLoading: false,
 })
 
 export default {
+  namespaced: true,
   state,
-  actions
+  actions,
+  mutations
 }

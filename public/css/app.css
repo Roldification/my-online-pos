@@ -191,7 +191,7 @@ button,
 [type='reset'],
 [type='submit'] {
   -webkit-appearance: button; /* 1 */
-  background-color: transparent; /* 2 */
+/*  background-color: transparent; /* 2 */
   background-image: none; /* 2 */
 }
 
@@ -478,6 +478,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 .ml-auto {
   margin-left: auto;
 }
+.mt-2 {
+  margin-top: 0.5rem;
+}
 .block {
   display: block;
 }
@@ -525,6 +528,18 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .flex-row {
   flex-direction: row;
+}
+.place-content-end {
+  place-content: end;
+}
+.place-items-end {
+  place-items: end;
+}
+.items-end {
+  align-items: flex-end;
+}
+.justify-items-end {
+  justify-items: end;
 }
 .gap-2 {
   gap: 0.5rem;

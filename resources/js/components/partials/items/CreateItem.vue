@@ -158,12 +158,13 @@ export default {
           let res = result.data
           if (res.status=='ok') {
             vm.item = {
-            name: '',
-            category: null,
-            sub_category_id: null,
-            min_uom: '',
-            item_attributes: {}
-          }
+              name: '',
+              category: null,
+              sub_category_id: null,
+              min_uom: '',
+              item_attributes: {}
+            }
+            this.$store.dispatch('items/fetchItems', 1)
           }
         }).catch(err=>console.log(err))
       }

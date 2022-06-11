@@ -7619,6 +7619,8 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     onSubmit: function onSubmit() {
+      var _this = this;
+
       var vm = this;
       window.axios.post('save-item', this.item).then(function (result) {
         var res = result.data;
@@ -7631,6 +7633,8 @@ __webpack_require__.r(__webpack_exports__);
             min_uom: '',
             item_attributes: {}
           };
+
+          _this.$store.dispatch('items/fetchItems', 1);
         }
       })["catch"](function (err) {
         return console.log(err);
@@ -7658,10 +7662,60 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  data: function data() {
+    return {
+      pageInfo: {
+        current_page: 1
+      }
+    };
+  },
   computed: {
     gridItems: function gridItems() {
-      return this.$store.state.items.loadedItems;
+      return this.$store.state.items.itemsPageInfo;
+    },
+    isPageLoading: function isPageLoading() {
+      return this.$store.state.items.isPageLoading;
+    }
+  },
+  created: function created() {
+    this.loadItems();
+  },
+  methods: {
+    loadItems: function loadItems() {
+      // window.axios.get('get-recent-items?page='+this.pageInfo.current_page).then(res=>{
+      //   console.log(res.data)
+      //   this.pageInfo = res.data
+      // }).catch(err=>console.log(err.message))
+      this.$store.dispatch('items/fetchItems', 1);
+    },
+    pageChange: function pageChange(page) {
+      console.log(page);
+      this.$store.dispatch('items/fetchItems', page);
     }
   }
 });
@@ -7808,8 +7862,18 @@ var actionOne = function actionOne(context, payload) {
   return 0;
 };
 
+var fetchItems = function fetchItems(context, payload) {
+  context.commit('setLoadingStatus', true);
+  window.axios.get('get-recent-items?page=' + payload).then(function (resx) {
+    console.log('i went here');
+    context.commit('setItemsPageInfo', resx.data);
+    context.commit('setLoadingStatus', false);
+  });
+};
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  actionOne: actionOne
+  actionOne: actionOne,
+  fetchItems: fetchItems
 });
 
 /***/ }),
@@ -7826,17 +7890,50 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./actions */ "./resources/js/store/items/actions.js");
+/* harmony import */ var _mutations__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./mutations */ "./resources/js/store/items/mutations.js");
+
 
 
 var state = function state() {
   return {
-    loadedItems: []
+    itemsPageInfo: {
+      current_page: 1
+    },
+    isPageLoading: false
   };
 };
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  namespaced: true,
   state: state,
-  actions: _actions__WEBPACK_IMPORTED_MODULE_0__["default"]
+  actions: _actions__WEBPACK_IMPORTED_MODULE_0__["default"],
+  mutations: _mutations__WEBPACK_IMPORTED_MODULE_1__["default"]
+});
+
+/***/ }),
+
+/***/ "./resources/js/store/items/mutations.js":
+/*!***********************************************!*\
+  !*** ./resources/js/store/items/mutations.js ***!
+  \***********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+var setItemsPageInfo = function setItemsPageInfo(state, payload) {
+  state.itemsPageInfo = payload;
+};
+
+var setLoadingStatus = function setLoadingStatus(state, payload) {
+  state.isPageLoading = payload;
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  setItemsPageInfo: setItemsPageInfo,
+  setLoadingStatus: setLoadingStatus
 });
 
 /***/ }),
@@ -94347,9 +94444,51 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _vm._v("\n  hellowx 2 " + _vm._s(_vm.gridItems.length) + "\n"),
-  ])
+  return _c(
+    "div",
+    [
+      _vm._v("\n  hellowx 2 " + _vm._s(_vm.gridItems.length) + "\n\n  "),
+      _c(
+        "el-table",
+        {
+          directives: [
+            {
+              name: "loading",
+              rawName: "v-loading",
+              value: _vm.isPageLoading,
+              expression: "isPageLoading",
+            },
+          ],
+          attrs: { size: "small", data: _vm.gridItems.data },
+        },
+        [
+          _c("el-table-column", {
+            attrs: { prop: "name", label: "Item Name" },
+          }),
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "grid justify-items-end mt-2" },
+        [
+          _c("el-pagination", {
+            attrs: {
+              "current-page": _vm.gridItems.current_page,
+              background: "",
+              "page-size": _vm.gridItems.per_page,
+              layout: "prev, pager, next",
+              total: _vm.gridItems.total,
+            },
+            on: { "current-change": _vm.pageChange },
+          }),
+        ],
+        1
+      ),
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true

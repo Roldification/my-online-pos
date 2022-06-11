@@ -94,4 +94,11 @@ class StoreController extends Controller
             'message'=>''
         ]);
     }
+    
+    public function getRecentItems(Request $request) {
+
+        $items = Items::where('stores_id', session('loadedStoreId')->id)->orderBy('id', 'desc')->with('subcategories')->paginate(2);
+
+        return response($items);
+    }
 }
