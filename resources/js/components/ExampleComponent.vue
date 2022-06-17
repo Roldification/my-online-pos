@@ -48,6 +48,7 @@
             console.log('Component mounted.')
             window.axios.get('http://localhost:8000/').then(res=>{
                 console.log(res.data)
+
             })
         },
 
@@ -63,7 +64,7 @@
                     this.$message({
                         type: 'info',
                         message: 'Delete canceled'
-                    });          
+                    });
                 });
             }
         }

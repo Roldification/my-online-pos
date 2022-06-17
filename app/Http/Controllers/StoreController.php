@@ -12,16 +12,16 @@ use Illuminate\Support\Facades\Validator;
 
 class StoreController extends Controller
 {
-    
+
     public function store(Request $request) {
-        
+
         $data = $request->validate([
             'name'=>'required|max:100',
             'slug'=>'required|max:10'
         ]);
 
         $data['user_id'] = Auth::user()->id;
-     
+
         $store  = Store::create($data);
         return back();
     }
@@ -69,15 +69,18 @@ class StoreController extends Controller
         ]);
     }
 
+    /**
+     * @throws \Illuminate\Validation\ValidationException
+     */
     public function insertItem(Request $request) {
 
-        $validator = Validator::make($request->all(), [
+       Validator::make($request->all(), [
             'name'=>'required',
             'category'=>'required',
             'sub_category_id'=>'required',
             'min_uom'=>'required'
         ])->validate();
-        
+
 
         // API routes have no fucking clue about shit in the backend.
 
@@ -94,10 +97,10 @@ class StoreController extends Controller
             'message'=>''
         ]);
     }
-    
+
     public function getRecentItems(Request $request) {
 
-        $items = Items::where('stores_id', session('loadedStoreId')->id)->orderBy('id', 'desc')->with('subcategories')->paginate(2);
+        $items = Items::where('stores_id', session('loadedStoreId')->id)->orderBy('id', 'desc')->with('subcategories')->paginate(5);
 
         return response($items);
     }
