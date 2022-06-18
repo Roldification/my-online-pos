@@ -121,6 +121,7 @@ export default {
         this.dialogVisible = false
         this.categories.push(data)
         this.item.category = data.id
+        this.subcategories = []
       },
 
       doneAddSubcategory (data) {
