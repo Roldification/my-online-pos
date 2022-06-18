@@ -21,6 +21,8 @@ Route::get('/', [UserController::class, 'dashboard'])->middleware('auth')->name(
 
 Route::get('/manage-items', [UserController::class, 'viewItemsManagement'])->middleware('auth')->name('manage-items');
 
+Route::get('/create-po', [UserController::class, 'createPo']);
+
 Route::get('/register', [UserController::class, 'register']);
 
 Route::get('/login', [UserController::class, 'login']);

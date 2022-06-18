@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\ItemCategories;
+use App\Models\Items;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -21,6 +22,14 @@ class UserController extends Controller
         $stores = $user->stores()->get();
         // dd($loadedStore);
         return view('welcome', ['user' => $user, 'stores'=>$stores, 'loadedStore'=>$loadedStore]);
+    }
+
+    public function createPo() {
+        $user = Auth::user();
+        $loadedStore = session('loadedStoreId') ?? false;
+        $items = Items::where('stores_id', $loadedStore->id)->get();
+        return view('purchase-orders.create', ['user' => $user, 'loadedStore'=>$loadedStore, 'items'=>$items]);
+
     }
 
     public function login() {
