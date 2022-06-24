@@ -7593,6 +7593,7 @@ __webpack_require__.r(__webpack_exports__);
       this.dialogVisible = false;
       this.categories.push(data);
       this.item.category = data.id;
+      this.subcategories = [];
     },
     doneAddSubcategory: function doneAddSubcategory(data) {
       this.subcategoriesDialog = false;
@@ -7686,6 +7687,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -7716,6 +7725,10 @@ __webpack_require__.r(__webpack_exports__);
     pageChange: function pageChange(page) {
       console.log(page);
       this.$store.dispatch('items/fetchItems', page);
+    },
+    handleView: function handleView(row) {
+      window.location = "/view-item?id=".concat(row);
+      console.log(row);
     }
   }
 });
@@ -94649,6 +94662,31 @@ var render = function () {
         [
           _c("el-table-column", {
             attrs: { prop: "name", label: "Item Name" },
+          }),
+          _vm._v(" "),
+          _c("el-table-column", {
+            attrs: { label: "Operations" },
+            scopedSlots: _vm._u([
+              {
+                key: "default",
+                fn: function (scope) {
+                  return [
+                    _c(
+                      "el-button",
+                      {
+                        attrs: { size: "mini" },
+                        on: {
+                          click: function ($event) {
+                            return _vm.handleView(scope.row.id)
+                          },
+                        },
+                      },
+                      [_vm._v("View")]
+                    ),
+                  ]
+                },
+              },
+            ]),
           }),
         ],
         1

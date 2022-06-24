@@ -13,6 +13,14 @@
       >
 
       </el-table-column>
+
+      <el-table-column label="Operations">
+          <template slot-scope="scope">
+              <el-button
+                size="mini"
+                @click="handleView(scope.row.id)">View</el-button>
+          </template>
+      </el-table-column>
     </el-table>
 
     <div class="grid justify-items-end mt-2">
@@ -63,6 +71,11 @@ export default {
     pageChange (page) {
       console.log(page)
       this.$store.dispatch('items/fetchItems', page)
+    },
+
+    handleView (row) {
+      window.location=`/view-item?id=${row}`
+      console.log(row)
     }
   }
 }

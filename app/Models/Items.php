@@ -9,7 +9,10 @@ class Items extends Model
 {
     use HasFactory;
 
-    
+    protected $casts = [
+        'item_attributes' => 'array',
+    ];
+
     public function subcategories() {
         return $this->hasOne(ItemSubcategories::class, 'id', 'item_subcategories_id');
     }
