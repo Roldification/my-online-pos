@@ -84,12 +84,21 @@ class StoreController extends Controller
 
         // API routes have no fucking clue about shit in the backend.
 
+        $itemAttributes = $request->item_attributes;
+        $itemAttributes['uoms'] = [
+            [
+                'uom'=>$request->min_uom,
+                'min_uom_count'=>1,
+                'is_base'=>true
+            ]
+        ];
+
         $item = new Items;
         $item->name = $request->name;
         $item->item_subcategories_id = $request->sub_category_id;
         $item->stores_id = session('loadedStoreId')->id;
         $item->min_uom_name = $request->min_uom;
-        $item->item_attributes = json_encode($request->item_attributes);
+        $item->item_attributes = json_encode($itemAttributes);
         $item->save();
 
         return response([
@@ -103,5 +112,11 @@ class StoreController extends Controller
         $items = Items::where('stores_id', session('loadedStoreId')->id)->orderBy('id', 'desc')->with('subcategories')->paginate(5);
 
         return response($items);
+    }
+
+    public function viewItem(Request $request) {
+        $items = Items::firstWhere('id', $request->query('id'));
+        
+        return view('items.view', ['itemData'=>$items]);
     }
 }
