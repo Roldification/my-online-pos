@@ -7593,6 +7593,7 @@ __webpack_require__.r(__webpack_exports__);
       this.dialogVisible = false;
       this.categories.push(data);
       this.item.category = data.id;
+      this.subcategories = [];
     },
     doneAddSubcategory: function doneAddSubcategory(data) {
       this.subcategoriesDialog = false;
