@@ -107,6 +107,27 @@ class StoreController extends Controller
         ]);
     }
 
+    public function updateItem (Request $request) {
+        Validator::make($request->all(), [
+            'id'=>'required',
+            'name'=>'required',
+            'category'=>'required',
+            'sub_category_id'=>'required',
+        ])->validate();
+
+        $item = Items::find($request->id);
+        $item->name = $request->name;
+        $item->item_subcategories_id = $request->sub_category_id;
+        $item->stores_id = session('loadedStoreId')->id;
+        $item->save();
+
+        return response([
+            'status'=>'ok',
+            'message'=>''
+        ]);
+
+    }
+
     public function getRecentItems(Request $request) {
 
         $items = Items::where('stores_id', session('loadedStoreId')->id)->orderBy('id', 'desc')->with('subcategories')->paginate(5);
@@ -115,8 +136,11 @@ class StoreController extends Controller
     }
 
     public function viewItem(Request $request) {
-        $items = Items::firstWhere('id', $request->query('id'));
+        // $items = Items::firstWhere('id', $request->query('id'))->with('subcategories');
+        $item = Items::with(['subcategories.categories'])->where('id', $request->query('id'))->get()[0];
+        $categories = ItemCategories::where('store_id', $item->stores_id)->get();
+        $defaultSubcategories = ItemSubcategories::where('item_categories_id', $item->subcategories->categories->id)->get();
         
-        return view('items.view', ['itemData'=>$items]);
+        return view('items.view', ['itemData'=>$item, 'categories'=>$categories, 'defaultSubcategories'=>$defaultSubcategories]);
     }
 }
