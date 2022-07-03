@@ -45,6 +45,8 @@ Route::post('/save-item', [StoreController::class, 'insertItem'])->middleware('a
 
 Route::post('/update-item', [StoreController::class, 'updateItem'])->middleware('auth');
 
+Route::post('/update-uom', [StoreController::class, 'updateUOMAttributes'])->middleware('auth');
+
 Route::get('/get-recent-items', [StoreController::class, 'getRecentItems'])->middleware('auth');
 
 // Route::get('/create-user', function (Request $request) {

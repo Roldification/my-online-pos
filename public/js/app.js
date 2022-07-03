@@ -7776,6 +7776,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['itemData', 'defaultSubcategories', 'categoriesList'],
@@ -7870,6 +7878,16 @@ __webpack_require__.r(__webpack_exports__);
         is_base: false,
         min_uom_count: null
       };
+    },
+    updateUOM: function updateUOM() {
+      window.axios.post('/update-uom', {
+        id: this.itemData.id,
+        uoms: this.displayItemData.item_attributes.uoms
+      }).then(function (result) {
+        console.log(result.data);
+      })["catch"](function (err) {
+        return console.log(err);
+      });
     }
   }
 });
@@ -8038,7 +8056,7 @@ __webpack_require__.r(__webpack_exports__);
         rowId: 1,
         item: null,
         quantity: null,
-        uom: null,
+        uom: [],
         isEditing: false,
         isEditingItem: false
       } // {   rowId: 2,
@@ -95176,186 +95194,215 @@ var render = function () {
         ]
       ),
       _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "panel-body p-5" },
-        [
-          _c("table", { staticClass: "text-left" }, [
-            _c("thead", [
-              _c("tr", [
-                _c("th", { staticClass: "border border-dashed p-2" }, [
-                  _vm._v("UOM"),
-                ]),
-                _vm._v(" "),
-                _c(
-                  "th",
-                  { staticClass: "border border-dashed p-2" },
-                  [
-                    _c(
-                      "el-tooltip",
-                      {
-                        staticClass: "item",
-                        attrs: {
-                          content:
-                            "How many Base UOM (Unit Of Measurement) does this UOM constitutes",
-                          placement: "top-start",
-                        },
-                      },
-                      [_c("span", [_vm._v("count")])]
-                    ),
-                  ],
-                  1
-                ),
-                _vm._v(" "),
-                _c("th", { staticClass: "border border-dashed p-2" }, [
-                  _vm._v("Is Base?"),
-                ]),
-                _vm._v(" "),
-                _vm.isEditingUOM
-                  ? _c("th", { staticClass: "border border-dashed p-2" }, [
-                      _vm._v("Options"),
-                    ])
-                  : _vm._e(),
+      _c("div", { staticClass: "panel-body p-5" }, [
+        _c("table", { staticClass: "text-left" }, [
+          _c("thead", [
+            _c("tr", [
+              _c("th", { staticClass: "border border-dashed p-2" }, [
+                _vm._v("UOM"),
               ]),
+              _vm._v(" "),
+              _c(
+                "th",
+                { staticClass: "border border-dashed p-2" },
+                [
+                  _c(
+                    "el-tooltip",
+                    {
+                      staticClass: "item",
+                      attrs: {
+                        content:
+                          "How many Base UOM (Unit Of Measurement) does this UOM constitutes",
+                        placement: "top-start",
+                      },
+                    },
+                    [_c("span", [_vm._v("count")])]
+                  ),
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c("th", { staticClass: "border border-dashed p-2" }, [
+                _vm._v("Is Base?"),
+              ]),
+              _vm._v(" "),
+              _vm.isEditingUOM
+                ? _c("th", { staticClass: "border border-dashed p-2" }, [
+                    _vm._v("Options"),
+                  ])
+                : _vm._e(),
             ]),
-            _vm._v(" "),
-            _c(
-              "tbody",
-              [
-                _vm._l(
-                  _vm.displayItemData.item_attributes.uoms,
-                  function (row, index) {
-                    return _c("tr", { key: index }, [
-                      _c(
-                        "td",
-                        { staticClass: "border border-dashed p-2" },
-                        [
-                          !_vm.isEditingUOM
-                            ? _c("span", [_vm._v(_vm._s(row.uom))])
-                            : _c("el-input", {
-                                model: {
-                                  value: row.uom,
-                                  callback: function ($$v) {
-                                    _vm.$set(row, "uom", $$v)
-                                  },
-                                  expression: "row.uom",
-                                },
-                              }),
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c("td", { staticClass: "border border-dashed p-2" }, [
-                        !_vm.isEditingUOM
-                          ? _c("span", [_vm._v(_vm._s(row.min_uom_count))])
-                          : _c(
-                              "div",
-                              { staticStyle: { width: "100px" } },
-                              [
-                                _c("el-input", {
-                                  model: {
-                                    value: row.min_uom_count,
-                                    callback: function ($$v) {
-                                      _vm.$set(row, "min_uom_count", $$v)
-                                    },
-                                    expression: "row.min_uom_count",
-                                  },
-                                }),
-                              ],
-                              1
-                            ),
-                      ]),
-                      _vm._v(" "),
-                      _c("td", { staticClass: "border border-dashed p-2" }, [
-                        _vm._v(_vm._s(row.is_base ? "Yes" : "No")),
-                      ]),
-                    ])
-                  }
-                ),
-                _vm._v(" "),
-                _vm.isEditingUOM
-                  ? _c("tr", { staticClass: "bg-blue-100" }, [
-                      _c(
-                        "td",
-                        { staticClass: "border border-dashed p-2" },
-                        [
-                          _c("el-input", {
-                            model: {
-                              value: _vm.newUOMValue.uom,
-                              callback: function ($$v) {
-                                _vm.$set(_vm.newUOMValue, "uom", $$v)
-                              },
-                              expression: "newUOMValue.uom",
-                            },
-                          }),
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c("td", { staticClass: "border border-dashed p-2" }, [
-                        _c(
-                          "div",
-                          { staticStyle: { width: "100px" } },
-                          [
-                            _c("el-input", {
-                              model: {
-                                value: _vm.newUOMValue.min_uom_count,
-                                callback: function ($$v) {
-                                  _vm.$set(
-                                    _vm.newUOMValue,
-                                    "min_uom_count",
-                                    $$v
-                                  )
-                                },
-                                expression: "newUOMValue.min_uom_count",
-                              },
-                            }),
-                          ],
-                          1
-                        ),
-                      ]),
-                      _vm._v(" "),
-                      _c("td", { staticClass: "border border-dashed p-2" }, [
-                        _vm._v("No"),
-                      ]),
-                      _vm._v(" "),
-                      _c(
-                        "td",
-                        { staticClass: "border border-dashed p-2" },
-                        [
-                          _c("el-button", {
-                            attrs: {
-                              type: "success",
-                              icon: "el-icon-check",
-                              circle: "",
-                            },
-                            on: { click: _vm.addNewUOM },
-                          }),
-                        ],
-                        1
-                      ),
-                    ])
-                  : _vm._e(),
-              ],
-              2
-            ),
           ]),
           _vm._v(" "),
           _c(
-            "el-button",
-            {
-              attrs: { size: "small mt-5" },
-              on: {
-                click: function ($event) {
-                  _vm.isEditingUOM = !_vm.isEditingUOM
-                },
-              },
-            },
-            [_vm._v("Update")]
+            "tbody",
+            [
+              _vm._l(
+                _vm.displayItemData.item_attributes.uoms,
+                function (row, index) {
+                  return _c("tr", { key: index }, [
+                    _c(
+                      "td",
+                      { staticClass: "border border-dashed p-2" },
+                      [
+                        !_vm.isEditingUOM
+                          ? _c("span", [_vm._v(_vm._s(row.uom))])
+                          : _c("el-input", {
+                              model: {
+                                value: row.uom,
+                                callback: function ($$v) {
+                                  _vm.$set(row, "uom", $$v)
+                                },
+                                expression: "row.uom",
+                              },
+                            }),
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c("td", { staticClass: "border border-dashed p-2" }, [
+                      !_vm.isEditingUOM
+                        ? _c("span", [_vm._v(_vm._s(row.min_uom_count))])
+                        : _c(
+                            "div",
+                            { staticStyle: { width: "100px" } },
+                            [
+                              _c("el-input", {
+                                model: {
+                                  value: row.min_uom_count,
+                                  callback: function ($$v) {
+                                    _vm.$set(row, "min_uom_count", $$v)
+                                  },
+                                  expression: "row.min_uom_count",
+                                },
+                              }),
+                            ],
+                            1
+                          ),
+                    ]),
+                    _vm._v(" "),
+                    _c("td", { staticClass: "border border-dashed p-2" }, [
+                      _vm._v(_vm._s(row.is_base ? "Yes" : "No")),
+                    ]),
+                  ])
+                }
+              ),
+              _vm._v(" "),
+              _vm.isEditingUOM
+                ? _c("tr", { staticClass: "bg-blue-100" }, [
+                    _c(
+                      "td",
+                      { staticClass: "border border-dashed p-2" },
+                      [
+                        _c("el-input", {
+                          model: {
+                            value: _vm.newUOMValue.uom,
+                            callback: function ($$v) {
+                              _vm.$set(_vm.newUOMValue, "uom", $$v)
+                            },
+                            expression: "newUOMValue.uom",
+                          },
+                        }),
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c("td", { staticClass: "border border-dashed p-2" }, [
+                      _c(
+                        "div",
+                        { staticStyle: { width: "100px" } },
+                        [
+                          _c("el-input", {
+                            model: {
+                              value: _vm.newUOMValue.min_uom_count,
+                              callback: function ($$v) {
+                                _vm.$set(_vm.newUOMValue, "min_uom_count", $$v)
+                              },
+                              expression: "newUOMValue.min_uom_count",
+                            },
+                          }),
+                        ],
+                        1
+                      ),
+                    ]),
+                    _vm._v(" "),
+                    _c("td", { staticClass: "border border-dashed p-2" }, [
+                      _vm._v("No"),
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "td",
+                      { staticClass: "border border-dashed p-2" },
+                      [
+                        _c("el-button", {
+                          attrs: {
+                            type: "success",
+                            icon: "el-icon-check",
+                            circle: "",
+                          },
+                          on: { click: _vm.addNewUOM },
+                        }),
+                      ],
+                      1
+                    ),
+                  ])
+                : _vm._e(),
+            ],
+            2
           ),
-        ],
-        1
-      ),
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "flex flex-row mt-5" }, [
+          !_vm.isEditingUOM
+            ? _c(
+                "div",
+                [
+                  _c(
+                    "el-button",
+                    {
+                      attrs: { size: "small" },
+                      on: {
+                        click: function ($event) {
+                          _vm.isEditingUOM = true
+                        },
+                      },
+                    },
+                    [_vm._v("Update")]
+                  ),
+                ],
+                1
+              )
+            : _c(
+                "div",
+                [
+                  _c(
+                    "el-button",
+                    {
+                      staticClass: "grow",
+                      attrs: { size: "small" },
+                      on: { click: _vm.updateUOM },
+                    },
+                    [_vm._v("Save")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "el-button",
+                    {
+                      staticClass: "grow",
+                      attrs: { size: "small" },
+                      on: {
+                        click: function ($event) {
+                          _vm.isEditingUOM = false
+                        },
+                      },
+                    },
+                    [_vm._v("Cancel")]
+                  ),
+                ],
+                1
+              ),
+        ]),
+      ]),
     ]),
   ])
 }

@@ -6,9 +6,12 @@ use App\Models\ItemCategories;
 use App\Models\Items;
 use App\Models\ItemSubcategories;
 use App\Models\Store;
+use GuzzleHttp\Utils;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+
+use function GuzzleHttp\json_decode;
 
 class StoreController extends Controller
 {
@@ -84,7 +87,7 @@ class StoreController extends Controller
 
         // API routes have no fucking clue about shit in the backend.
 
-        $itemAttributes = $request->item_attributes;
+        // $itemAttributes = $request->item_attributes;
         $itemAttributes['uoms'] = [
             [
                 'uom'=>$request->min_uom,
@@ -98,7 +101,7 @@ class StoreController extends Controller
         $item->item_subcategories_id = $request->sub_category_id;
         $item->stores_id = session('loadedStoreId')->id;
         $item->min_uom_name = $request->min_uom;
-        $item->item_attributes = json_encode($itemAttributes);
+        $item->item_attributes = $itemAttributes;
         $item->save();
 
         return response([
@@ -126,6 +129,29 @@ class StoreController extends Controller
             'message'=>''
         ]);
 
+    }
+
+    public function updateUOMAttributes (Request $request) {
+        $jsonChecker = Validator::make($request->all(), [
+           // 'uoms' => 'json',
+            'id' => 'required'
+        ]);
+
+        if ($jsonChecker->fails())
+            return response([
+                'status'=>'error',
+                'message'=>$jsonChecker->errors()
+            ], 500);
+        
+        $itemAttributes['uoms'] = $request->uoms;
+        $item = Items::find($request->id);
+        $item->item_attributes = $itemAttributes;
+        $item->save();
+
+        return response([
+            'status'=>'ok',
+            'message'=>''
+        ]);
     }
 
     public function getRecentItems(Request $request) {

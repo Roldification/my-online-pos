@@ -59,7 +59,7 @@ export default {
                 rowId: 1,
                 item: null,
                 quantity: null,
-                uom: null,
+                uom: [],
                 isEditing: false,
                 isEditingItem: false,
             },

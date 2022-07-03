@@ -108,7 +108,15 @@
                     </tbody>
                 </table>
 
-                <el-button size="small mt-5" @click="isEditingUOM=!isEditingUOM">Update</el-button>
+                <div class="flex flex-row mt-5">
+                    <div v-if="!isEditingUOM">
+                        <el-button size="small" @click="isEditingUOM=true">Update</el-button>
+                    </div>
+                    <div v-else>
+                        <el-button size="small" class="grow" @click="updateUOM">Save</el-button>
+                        <el-button size="small" class="grow" @click="isEditingUOM=false">Cancel</el-button>
+                    </div>
+                </div>
             </div>
           </div>
         <!-- end of uom settings -->
@@ -213,6 +221,12 @@ export default {
             is_base: false,
             min_uom_count: null
         }
+      },
+
+      updateUOM () {
+        window.axios.post('/update-uom', {id: this.itemData.id, uoms: this.displayItemData.item_attributes.uoms}).then(result=>{
+          console.log(result.data)
+        }).catch(err=>console.log(err))
       }
     }
 }
