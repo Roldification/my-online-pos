@@ -59,6 +59,59 @@
                 <el-button size="small" class="grow" @click="cancelEdit">Cancel</el-button>
             </div>
         </div>
+
+        <!-- uom settings -->
+        <div class="panel border-2 rounded-md mt-5">
+            <div class="panel-header bg-blue-600 rounded-t-md px-2 py-1 text-white text-sm">
+                Unit of Measurements for {{displayItemData.name}}
+            </div>
+            <div class="panel-body p-5">
+                <table class="text-left">
+                    <thead>
+                        <tr>
+                          <th class="border border-dashed p-2">UOM</th>
+                          <th class="border border-dashed p-2">
+                             <el-tooltip class="item" content="How many Base UOM (Unit Of Measurement) does this UOM constitutes" placement="top-start">
+                                <span>count</span>
+                             </el-tooltip>
+                          </th>
+                          <th class="border border-dashed p-2">Is Base?</th>
+                          <th v-if="isEditingUOM" class="border border-dashed p-2">Options</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                      <tr v-for="(row, index) in displayItemData.item_attributes.uoms" :key="index">
+                        <td class="border border-dashed p-2">
+                          <span v-if="!isEditingUOM">{{row.uom}}</span>
+                          <el-input v-else v-model="row.uom"> </el-input>
+                        </td>
+                        <td class="border border-dashed p-2">
+                          <span v-if="!isEditingUOM">{{row.min_uom_count}}</span>
+                          <div v-else style="width:100px;">
+                              <el-input v-model="row.min_uom_count"> </el-input>
+                          </div>
+                        </td>
+                        <td class="border border-dashed p-2">{{row.is_base ? 'Yes' : 'No'}}</td>
+                      </tr>
+                      <tr class="bg-blue-100" v-if="isEditingUOM">
+                          <td class="border border-dashed p-2">
+                              <el-input v-model="newUOMValue.uom"> </el-input>
+                          </td>
+                          <td class="border border-dashed p-2">
+                              <div style="width:100px;">
+                                  <el-input v-model="newUOMValue.min_uom_count"> </el-input>
+                              </div>
+                          </td>
+                          <td class="border border-dashed p-2">No</td>
+                          <td class="border border-dashed p-2"><el-button type="success" icon="el-icon-check" circle @click="addNewUOM"></el-button></td>
+                      </tr>
+                    </tbody>
+                </table>
+
+                <el-button size="small mt-5" @click="isEditingUOM=!isEditingUOM">Update</el-button>
+            </div>
+          </div>
+        <!-- end of uom settings -->
     </div>
 </template>
 
@@ -71,6 +124,7 @@ export default {
         return {
           displayItemData: _.cloneDeep(this.itemData),
           isEditing: false,
+          isEditingUOM: false,
           item: {
             name: this.itemData.name,
             category: this.itemData.subcategories.categories.id,
@@ -84,7 +138,12 @@ export default {
             name: this.itemData.name,
             category: this.itemData.subcategories.categories.id,
             sub_category_id: this.itemData.subcategories.id,
-          } // --> this will occur when edit cancellation is done or new update for item has pushed through
+          }, // --> this will occur when edit cancellation is done or new update for item has pushed through
+          newUOMValue: {
+            uom: null,
+            is_base: false,
+            min_uom_count: null
+          },
         }
     },
 
@@ -117,7 +176,8 @@ export default {
       },
 
       cancelEdit () {
-        this.subcategories = this.latestSubcategories
+        this.subcategories = _.cloneDeep(this.latestSubcategories)
+        this.item = _.cloneDeep(this.latestItem)
         this.isEditing = false
       },
 
@@ -144,6 +204,15 @@ export default {
         .finally(()=>{
             vm.isEditing = false
         })
+      },
+
+      addNewUOM () {
+        this.displayItemData.item_attributes.uoms.push(this.newUOMValue)
+        this.newUOMValue = {
+            uom: null,
+            is_base: false,
+            min_uom_count: null
+        }
       }
     }
 }

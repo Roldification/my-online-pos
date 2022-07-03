@@ -7723,6 +7723,59 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['itemData', 'defaultSubcategories', 'categoriesList'],
@@ -7730,6 +7783,7 @@ __webpack_require__.r(__webpack_exports__);
     return {
       displayItemData: lodash__WEBPACK_IMPORTED_MODULE_0___default().cloneDeep(this.itemData),
       isEditing: false,
+      isEditingUOM: false,
       item: {
         name: this.itemData.name,
         category: this.itemData.subcategories.categories.id,
@@ -7743,8 +7797,13 @@ __webpack_require__.r(__webpack_exports__);
         name: this.itemData.name,
         category: this.itemData.subcategories.categories.id,
         sub_category_id: this.itemData.subcategories.id
-      } // --> this will occur when edit cancellation is done or new update for item has pushed through
-
+      },
+      // --> this will occur when edit cancellation is done or new update for item has pushed through
+      newUOMValue: {
+        uom: null,
+        is_base: false,
+        min_uom_count: null
+      }
     };
   },
   methods: {
@@ -7771,7 +7830,8 @@ __webpack_require__.r(__webpack_exports__);
       this.isEditing = true;
     },
     cancelEdit: function cancelEdit() {
-      this.subcategories = this.latestSubcategories;
+      this.subcategories = lodash__WEBPACK_IMPORTED_MODULE_0___default().cloneDeep(this.latestSubcategories);
+      this.item = lodash__WEBPACK_IMPORTED_MODULE_0___default().cloneDeep(this.latestItem);
       this.isEditing = false;
     },
     onSubmit: function onSubmit() {
@@ -7802,6 +7862,14 @@ __webpack_require__.r(__webpack_exports__);
       })["finally"](function () {
         vm.isEditing = false;
       });
+    },
+    addNewUOM: function addNewUOM() {
+      this.displayItemData.item_attributes.uoms.push(this.newUOMValue);
+      this.newUOMValue = {
+        uom: null,
+        is_base: false,
+        min_uom_count: null
+      };
     }
   }
 });
@@ -95090,6 +95158,204 @@ var render = function () {
             ],
             1
           ),
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "panel border-2 rounded-md mt-5" }, [
+      _c(
+        "div",
+        {
+          staticClass:
+            "panel-header bg-blue-600 rounded-t-md px-2 py-1 text-white text-sm",
+        },
+        [
+          _vm._v(
+            "\n            Unit of Measurements for " +
+              _vm._s(_vm.displayItemData.name) +
+              "\n        "
+          ),
+        ]
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "panel-body p-5" },
+        [
+          _c("table", { staticClass: "text-left" }, [
+            _c("thead", [
+              _c("tr", [
+                _c("th", { staticClass: "border border-dashed p-2" }, [
+                  _vm._v("UOM"),
+                ]),
+                _vm._v(" "),
+                _c(
+                  "th",
+                  { staticClass: "border border-dashed p-2" },
+                  [
+                    _c(
+                      "el-tooltip",
+                      {
+                        staticClass: "item",
+                        attrs: {
+                          content:
+                            "How many Base UOM (Unit Of Measurement) does this UOM constitutes",
+                          placement: "top-start",
+                        },
+                      },
+                      [_c("span", [_vm._v("count")])]
+                    ),
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c("th", { staticClass: "border border-dashed p-2" }, [
+                  _vm._v("Is Base?"),
+                ]),
+                _vm._v(" "),
+                _vm.isEditingUOM
+                  ? _c("th", { staticClass: "border border-dashed p-2" }, [
+                      _vm._v("Options"),
+                    ])
+                  : _vm._e(),
+              ]),
+            ]),
+            _vm._v(" "),
+            _c(
+              "tbody",
+              [
+                _vm._l(
+                  _vm.displayItemData.item_attributes.uoms,
+                  function (row, index) {
+                    return _c("tr", { key: index }, [
+                      _c(
+                        "td",
+                        { staticClass: "border border-dashed p-2" },
+                        [
+                          !_vm.isEditingUOM
+                            ? _c("span", [_vm._v(_vm._s(row.uom))])
+                            : _c("el-input", {
+                                model: {
+                                  value: row.uom,
+                                  callback: function ($$v) {
+                                    _vm.$set(row, "uom", $$v)
+                                  },
+                                  expression: "row.uom",
+                                },
+                              }),
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c("td", { staticClass: "border border-dashed p-2" }, [
+                        !_vm.isEditingUOM
+                          ? _c("span", [_vm._v(_vm._s(row.min_uom_count))])
+                          : _c(
+                              "div",
+                              { staticStyle: { width: "100px" } },
+                              [
+                                _c("el-input", {
+                                  model: {
+                                    value: row.min_uom_count,
+                                    callback: function ($$v) {
+                                      _vm.$set(row, "min_uom_count", $$v)
+                                    },
+                                    expression: "row.min_uom_count",
+                                  },
+                                }),
+                              ],
+                              1
+                            ),
+                      ]),
+                      _vm._v(" "),
+                      _c("td", { staticClass: "border border-dashed p-2" }, [
+                        _vm._v(_vm._s(row.is_base ? "Yes" : "No")),
+                      ]),
+                    ])
+                  }
+                ),
+                _vm._v(" "),
+                _vm.isEditingUOM
+                  ? _c("tr", { staticClass: "bg-blue-100" }, [
+                      _c(
+                        "td",
+                        { staticClass: "border border-dashed p-2" },
+                        [
+                          _c("el-input", {
+                            model: {
+                              value: _vm.newUOMValue.uom,
+                              callback: function ($$v) {
+                                _vm.$set(_vm.newUOMValue, "uom", $$v)
+                              },
+                              expression: "newUOMValue.uom",
+                            },
+                          }),
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c("td", { staticClass: "border border-dashed p-2" }, [
+                        _c(
+                          "div",
+                          { staticStyle: { width: "100px" } },
+                          [
+                            _c("el-input", {
+                              model: {
+                                value: _vm.newUOMValue.min_uom_count,
+                                callback: function ($$v) {
+                                  _vm.$set(
+                                    _vm.newUOMValue,
+                                    "min_uom_count",
+                                    $$v
+                                  )
+                                },
+                                expression: "newUOMValue.min_uom_count",
+                              },
+                            }),
+                          ],
+                          1
+                        ),
+                      ]),
+                      _vm._v(" "),
+                      _c("td", { staticClass: "border border-dashed p-2" }, [
+                        _vm._v("No"),
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "td",
+                        { staticClass: "border border-dashed p-2" },
+                        [
+                          _c("el-button", {
+                            attrs: {
+                              type: "success",
+                              icon: "el-icon-check",
+                              circle: "",
+                            },
+                            on: { click: _vm.addNewUOM },
+                          }),
+                        ],
+                        1
+                      ),
+                    ])
+                  : _vm._e(),
+              ],
+              2
+            ),
+          ]),
+          _vm._v(" "),
+          _c(
+            "el-button",
+            {
+              attrs: { size: "small mt-5" },
+              on: {
+                click: function ($event) {
+                  _vm.isEditingUOM = !_vm.isEditingUOM
+                },
+              },
+            },
+            [_vm._v("Update")]
+          ),
+        ],
+        1
+      ),
     ]),
   ])
 }
