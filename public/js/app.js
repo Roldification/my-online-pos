@@ -8047,6 +8047,37 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['items'],
@@ -8056,9 +8087,29 @@ __webpack_require__.r(__webpack_exports__);
         rowId: 1,
         item: null,
         quantity: null,
-        uom: [],
+        uom: null,
         isEditing: false,
-        isEditingItem: false
+        isEditingItem: false,
+        isEditingUOM: false,
+        available_uoms: []
+      }, {
+        rowId: 2,
+        item: null,
+        quantity: null,
+        uom: null,
+        isEditing: false,
+        isEditingItem: false,
+        isEditingUOM: false,
+        available_uoms: []
+      }, {
+        rowId: 3,
+        item: null,
+        quantity: null,
+        uom: null,
+        isEditing: false,
+        isEditingItem: false,
+        isEditingUOM: false,
+        available_uoms: []
       } // {   rowId: 2,
       //     item: 'Nagoya',
       //     quantity: null,
@@ -8084,6 +8135,10 @@ __webpack_require__.r(__webpack_exports__);
     },
     doneUpdateItem: function doneUpdateItem(row) {
       row.isEditingItem = false;
+      row.uom = null;
+      row.available_uoms = lodash__WEBPACK_IMPORTED_MODULE_0___default().find(this.items, function (o) {
+        return o.id == row.item;
+      }).item_attributes.uoms;
     },
     getItemName: function getItemName(value) {
       return lodash__WEBPACK_IMPORTED_MODULE_0___default().find(this.items, function (o) {
@@ -95667,6 +95722,86 @@ var render = function () {
                                 : scope.row.quantity
                             )
                         ),
+                      ]
+                    ),
+                  ]
+                },
+              },
+            ]),
+          }),
+          _vm._v(" "),
+          _c("el-table-column", {
+            attrs: { prop: "uom", label: "U.O.M", width: "250" },
+            scopedSlots: _vm._u([
+              {
+                key: "default",
+                fn: function (scope) {
+                  return [
+                    _c(
+                      "el-select",
+                      {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: scope.row.isEditingUOM,
+                            expression: "scope.row.isEditingUOM",
+                          },
+                        ],
+                        attrs: { placeholder: "Select UOM" },
+                        on: {
+                          change: function ($event) {
+                            scope.row.isEditingUOM = false
+                          },
+                        },
+                        model: {
+                          value: scope.row.uom,
+                          callback: function ($$v) {
+                            _vm.$set(scope.row, "uom", $$v)
+                          },
+                          expression: "scope.row.uom",
+                        },
+                      },
+                      _vm._l(scope.row.available_uoms, function (item) {
+                        return _c("el-option", {
+                          key: item.uom,
+                          attrs: { label: item.uom, value: item.uom },
+                        })
+                      }),
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "span",
+                      {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: !scope.row.isEditingUOM,
+                            expression: "!scope.row.isEditingUOM",
+                          },
+                        ],
+                        on: {
+                          click: function ($event) {
+                            scope.row.isEditingUOM = true
+                          },
+                        },
+                      },
+                      [
+                        scope.row.uom == null
+                          ? _c("span", [
+                              _vm._v(
+                                "\n                        -\n                    "
+                              ),
+                            ])
+                          : _c("span", [
+                              _vm._v(
+                                "\n                        " +
+                                  _vm._s(scope.row.uom) +
+                                  "\n                    "
+                              ),
+                            ]),
                       ]
                     ),
                   ]
