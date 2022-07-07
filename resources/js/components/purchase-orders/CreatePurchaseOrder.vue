@@ -75,8 +75,21 @@
                     </span>
                 </template>
             </el-table-column>
-
+            <el-table-column
+             prop="estimated_price"
+             label="Est. Price"
+             width="100"
+            >
+                <template slot-scope="scope">
+                    <el-input :id="'priceInput'+scope.row.rowId" v-show="scope.row.isEditingPrice" @blur="doneUpdatePrice(scope.row)" v-model="scope.row.estimated_price"></el-input>
+                    <span v-show="!scope.row.isEditingPrice" @click="updatePrice(scope.row)"> {{ scope.row.estimated_price  }}</span>
+                </template>
+            </el-table-column>
         </el-table>
+        <div class="mt-10">
+            <el-button size="mini" @click="addRow">Add Items</el-button>
+            <el-button size="mini" type="primary">Save Purchase Order</el-button>
+        </div>
     </div>
 </template>
 
@@ -91,29 +104,11 @@ export default {
                 item: null,
                 quantity: null,
                 uom: null,
-                isEditing: false,
+                estimated_price: 0,
+                isEditing: false, // quantity
                 isEditingItem: false,
                 isEditingUOM: false,
-                available_uoms: []
-            },
-            {
-                rowId: 2,
-                item: null,
-                quantity: null,
-                uom: null,
-                isEditing: false,
-                isEditingItem: false,
-                isEditingUOM: false,
-                available_uoms: []
-            },
-            {
-                rowId: 3,
-                item: null,
-                quantity: null,
-                uom: null,
-                isEditing: false,
-                isEditingItem: false,
-                isEditingUOM: false,
+                isEditingPrice: false,
                 available_uoms: []
             },
             // {   rowId: 2,
@@ -137,6 +132,16 @@ export default {
         doneUpdateQty (row) {
             row.isEditing = false
         },
+        updatePrice (row) {
+           // document.getElementById('qtyInput'+row.rowId).focus()
+            setTimeout(()=>{
+                document.getElementById('priceInput'+row.rowId).focus()
+            }, 500)
+            row.isEditingPrice = true
+        },
+        doneUpdatePrice (row) {
+            row.isEditingPrice = false
+        },
 
         updateItem (row) {
             row.isEditingItem = true
@@ -150,6 +155,21 @@ export default {
 
         getItemName: function (value) {
             return _.find(this.items, function (o) {return o.id == value}).name
+        },
+
+        addRow: function () {
+            this.gridPO.push({
+                rowId: this.gridPO.length + 1,
+                item: null,
+                quantity: null,
+                uom: null,
+                estimated_price: 0,
+                isEditing: false, // quantity
+                isEditingItem: false,
+                isEditingUOM: false,
+                isEditingPrice: false,
+                available_uoms: []
+            })
         }
     }
 }
