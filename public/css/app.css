@@ -191,7 +191,7 @@ button,
 [type='reset'],
 [type='submit'] {
   -webkit-appearance: button; /* 1 */
-  background-color: transparent; /* 2 */
+/*  background-color: transparent; /* 2 */
   background-image: none; /* 2 */
 }
 
@@ -483,6 +483,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .mt-5 {
   margin-top: 1.25rem;
+}
+.mt-10 {
+  margin-top: 2.5rem;
 }
 .block {
   display: block;

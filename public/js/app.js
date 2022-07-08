@@ -8078,6 +8078,19 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['items'],
@@ -8088,10 +8101,16 @@ __webpack_require__.r(__webpack_exports__);
         item: null,
         quantity: null,
         uom: null,
+<<<<<<< HEAD
         estimated_cost: 0,
+=======
+        estimated_price: 0,
+>>>>>>> bb026e4973e3f4a0daa90de31a4c4f587fd67fa1
         isEditing: false,
+        // quantity
         isEditingItem: false,
         isEditingUOM: false,
+<<<<<<< HEAD
         available_uoms: []
       }, {
         rowId: 2,
@@ -8112,6 +8131,9 @@ __webpack_require__.r(__webpack_exports__);
         isEditing: false,
         isEditingItem: false,
         isEditingUOM: false,
+=======
+        isEditingPrice: false,
+>>>>>>> bb026e4973e3f4a0daa90de31a4c4f587fd67fa1
         available_uoms: []
       } // {   rowId: 2,
       //     item: 'Nagoya',
@@ -8133,6 +8155,16 @@ __webpack_require__.r(__webpack_exports__);
     doneUpdateQty: function doneUpdateQty(row) {
       row.isEditing = false;
     },
+    updatePrice: function updatePrice(row) {
+      // document.getElementById('qtyInput'+row.rowId).focus()
+      setTimeout(function () {
+        document.getElementById('priceInput' + row.rowId).focus();
+      }, 500);
+      row.isEditingPrice = true;
+    },
+    doneUpdatePrice: function doneUpdatePrice(row) {
+      row.isEditingPrice = false;
+    },
     updateItem: function updateItem(row) {
       row.isEditingItem = true;
     },
@@ -8147,6 +8179,21 @@ __webpack_require__.r(__webpack_exports__);
       return lodash__WEBPACK_IMPORTED_MODULE_0___default().find(this.items, function (o) {
         return o.id == value;
       }).name;
+    },
+    addRow: function addRow() {
+      this.gridPO.push({
+        rowId: this.gridPO.length + 1,
+        item: null,
+        quantity: null,
+        uom: null,
+        estimated_price: 0,
+        isEditing: false,
+        // quantity
+        isEditingItem: false,
+        isEditingUOM: false,
+        isEditingPrice: false,
+        available_uoms: []
+      });
     }
   }
 });
@@ -95812,6 +95859,83 @@ var render = function () {
               },
             ]),
           }),
+          _vm._v(" "),
+          _c("el-table-column", {
+            attrs: {
+              prop: "estimated_price",
+              label: "Est. Price",
+              width: "100",
+            },
+            scopedSlots: _vm._u([
+              {
+                key: "default",
+                fn: function (scope) {
+                  return [
+                    _c("el-input", {
+                      directives: [
+                        {
+                          name: "show",
+                          rawName: "v-show",
+                          value: scope.row.isEditingPrice,
+                          expression: "scope.row.isEditingPrice",
+                        },
+                      ],
+                      attrs: { id: "priceInput" + scope.row.rowId },
+                      on: {
+                        blur: function ($event) {
+                          return _vm.doneUpdatePrice(scope.row)
+                        },
+                      },
+                      model: {
+                        value: scope.row.estimated_price,
+                        callback: function ($$v) {
+                          _vm.$set(scope.row, "estimated_price", $$v)
+                        },
+                        expression: "scope.row.estimated_price",
+                      },
+                    }),
+                    _vm._v(" "),
+                    _c(
+                      "span",
+                      {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: !scope.row.isEditingPrice,
+                            expression: "!scope.row.isEditingPrice",
+                          },
+                        ],
+                        on: {
+                          click: function ($event) {
+                            return _vm.updatePrice(scope.row)
+                          },
+                        },
+                      },
+                      [_vm._v(" " + _vm._s(scope.row.estimated_price))]
+                    ),
+                  ]
+                },
+              },
+            ]),
+          }),
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "mt-10" },
+        [
+          _c(
+            "el-button",
+            { attrs: { size: "mini" }, on: { click: _vm.addRow } },
+            [_vm._v("Add Items")]
+          ),
+          _vm._v(" "),
+          _c("el-button", { attrs: { size: "mini", type: "primary" } }, [
+            _vm._v("Save Purchase Order"),
+          ]),
         ],
         1
       ),
