@@ -20,6 +20,6 @@ class PurchaseOrderDetails extends Model
     ];
 
     public function item() {
-        return $this->belongsTo(Items::class);
+        return $this->belongsTo(Items::class, 'items_id', 'id');
     }
 }

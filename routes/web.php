@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\StoreController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -18,6 +19,8 @@ use Illuminate\Support\Facades\Auth;
 */
 
 Route::get('/', [UserController::class, 'dashboard'])->middleware('auth')->name('home');
+
+Route::get('/print', [HomeController::class, 'print'])->middleware('auth')->name('print');
 
 Route::get('/manage-items', [UserController::class, 'viewItemsManagement'])->middleware('auth')->name('manage-items');
 

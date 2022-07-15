@@ -174,8 +174,14 @@ class StoreController extends Controller
     }
 
     public function viewPO(Request $request) {
-        $po = PurchaseOrders::with('purchaseOrderDetails.item')->where('id', $request->query('id'))->first();
-        
+        $po = PurchaseOrders::with([
+            'purchaseOrderDetails',
+            'purchaseOrderDetails.item:id,name,item_subcategories_id',
+            'purchaseOrderDetails.item.subcategories:id,name,item_categories_id',
+            'purchaseOrderDetails.item.subcategories.categories:id,name',
+        ])->where('id', $request->query('id'))->first();
+
+
         if (!$po) {
             abort(404);
         } else {

@@ -1,9 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Barryvdh\DomPDF\Facade\Pdf;
 class HomeController extends Controller
 {
+    
     /**
      * Create a new controller instance.
      *
@@ -22,5 +23,11 @@ class HomeController extends Controller
     public function index()
     {
         return view('dashboard');
+    }
+
+    public function print()
+    {
+    $pdf = Pdf::loadView('pdf.purchaseorder', []);
+    return $pdf->stream();
     }
 }

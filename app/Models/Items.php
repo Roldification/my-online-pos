@@ -14,6 +14,6 @@ class Items extends Model
     ];
 
     public function subcategories() {
-        return $this->hasOne(ItemSubcategories::class, 'id', 'item_subcategories_id');
+        return $this->belongsTo(ItemSubcategories::class, 'item_subcategories_id', 'id');
     }
 }

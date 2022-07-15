@@ -1,20 +1,19 @@
 <template>
   <div>
-    hellowx 2 {{gridItems.length}}
-
     <el-table
-      :size="'small'"
+      size="small"
       :data="gridItems.data"
       v-loading="isPageLoading"
     >
       <el-table-column
+      class-name="text-xs"
       prop="name"
       label="Item Name"
       >
 
       </el-table-column>
 
-      <el-table-column label="Operations">
+      <el-table-column class-name="text-xs" label="Operations">
           <template slot-scope="scope">
               <el-button
                 size="mini"
