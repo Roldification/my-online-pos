@@ -88,7 +88,7 @@
         </el-table>
         <div class="mt-10">
             <el-button size="mini" @click="addRow">Add Items</el-button>
-            <el-button size="mini" type="primary">Save Purchase Order</el-button>
+            <el-button size="mini" type="primary" @click="savePO">Save Purchase Order</el-button>
         </div>
     </div>
 </template>
@@ -104,35 +104,8 @@ export default {
                 item: null,
                 quantity: null,
                 uom: null,
-<<<<<<< HEAD
-                estimated_cost: 0,
-                isEditing: false,
-                isEditingItem: false,
-                isEditingUOM: false,
-                available_uoms: []
-            },
-            {
-                rowId: 2,
-                item: null,
-                quantity: null,
-                uom: null,
-                estimated_cost: 0,
-                isEditing: false,
-                isEditingItem: false,
-                isEditingUOM: false,
-                available_uoms: []
-            },
-            {
-                rowId: 3,
-                item: null,
-                quantity: null,
-                uom: null,
-                estimated_cost: 0,
-                isEditing: false,
-=======
                 estimated_price: 0,
                 isEditing: false, // quantity
->>>>>>> bb026e4973e3f4a0daa90de31a4c4f587fd67fa1
                 isEditingItem: false,
                 isEditingUOM: false,
                 isEditingPrice: false,
@@ -196,6 +169,12 @@ export default {
                 isEditingUOM: false,
                 isEditingPrice: false,
                 available_uoms: []
+            })
+        },
+
+        savePO: function () {
+            window.axios.post('/save-po', {poDetails: this.gridPO}).then(resx=>{
+                console.log(resx.data)
             })
         }
     }

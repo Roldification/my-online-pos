@@ -8101,39 +8101,12 @@ __webpack_require__.r(__webpack_exports__);
         item: null,
         quantity: null,
         uom: null,
-<<<<<<< HEAD
-        estimated_cost: 0,
-=======
         estimated_price: 0,
->>>>>>> bb026e4973e3f4a0daa90de31a4c4f587fd67fa1
         isEditing: false,
         // quantity
         isEditingItem: false,
         isEditingUOM: false,
-<<<<<<< HEAD
-        available_uoms: []
-      }, {
-        rowId: 2,
-        item: null,
-        quantity: null,
-        uom: null,
-        estimated_cost: 0,
-        isEditing: false,
-        isEditingItem: false,
-        isEditingUOM: false,
-        available_uoms: []
-      }, {
-        rowId: 3,
-        item: null,
-        quantity: null,
-        uom: null,
-        estimated_cost: 0,
-        isEditing: false,
-        isEditingItem: false,
-        isEditingUOM: false,
-=======
         isEditingPrice: false,
->>>>>>> bb026e4973e3f4a0daa90de31a4c4f587fd67fa1
         available_uoms: []
       } // {   rowId: 2,
       //     item: 'Nagoya',
@@ -8193,6 +8166,13 @@ __webpack_require__.r(__webpack_exports__);
         isEditingUOM: false,
         isEditingPrice: false,
         available_uoms: []
+      });
+    },
+    savePO: function savePO() {
+      window.axios.post('/save-po', {
+        poDetails: this.gridPO
+      }).then(function (resx) {
+        console.log(resx.data);
       });
     }
   }
@@ -95283,12 +95263,11 @@ var render = function () {
           ),
     ]),
     _vm._v(" "),
-    _c("div", { staticClass: "panel border-2 rounded-md mt-5" }, [
+    _c("div", { staticClass: "panel border mt-5" }, [
       _c(
         "div",
         {
-          staticClass:
-            "panel-header bg-blue-600 rounded-t-md px-2 py-1 text-white text-sm",
+          staticClass: "panel-header bg-blue-600 px-2 py-1 text-white text-sm",
         },
         [
           _vm._v(
@@ -95933,9 +95912,14 @@ var render = function () {
             [_vm._v("Add Items")]
           ),
           _vm._v(" "),
-          _c("el-button", { attrs: { size: "mini", type: "primary" } }, [
-            _vm._v("Save Purchase Order"),
-          ]),
+          _c(
+            "el-button",
+            {
+              attrs: { size: "mini", type: "primary" },
+              on: { click: _vm.savePO },
+            },
+            [_vm._v("Save Purchase Order")]
+          ),
         ],
         1
       ),

@@ -4,7 +4,7 @@
 <div>
   @section('content')
       <div class="p-8 h-screen">
-        <div class="panel border-2 rounded-md">
+        <div class="panel rounded-md drop-shadow-lg">
             <div class="panel-header bg-blue-600 rounded-t-md px-2 py-1 text-white font-semibold">
               Item #{{$itemData->id}}
             </div>

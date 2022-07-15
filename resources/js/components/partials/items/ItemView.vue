@@ -61,8 +61,8 @@
         </div>
 
         <!-- uom settings -->
-        <div class="panel border-2 rounded-md mt-5">
-            <div class="panel-header bg-blue-600 rounded-t-md px-2 py-1 text-white text-sm">
+        <div class="panel border mt-5">
+            <div class="panel-header bg-blue-600 px-2 py-1 text-white text-sm">
                 Unit of Measurements for {{displayItemData.name}}
             </div>
             <div class="panel-body p-5">

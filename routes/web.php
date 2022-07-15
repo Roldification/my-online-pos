@@ -49,6 +49,10 @@ Route::post('/update-uom', [StoreController::class, 'updateUOMAttributes'])->mid
 
 Route::get('/get-recent-items', [StoreController::class, 'getRecentItems'])->middleware('auth');
 
+Route::post('/save-po', [StoreController::class, 'savePurchaseOrder'])->middleware('auth');
+
+Route::get('/view-po', [StoreController::class, 'viewPO'])->middleware('auth');
+
 // Route::get('/create-user', function (Request $request) {
 //     return 'hello world';
 // });

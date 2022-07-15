@@ -5,11 +5,14 @@ namespace App\Http\Controllers;
 use App\Models\ItemCategories;
 use App\Models\Items;
 use App\Models\ItemSubcategories;
+use App\Models\PurchaseOrders;
 use App\Models\Store;
 use GuzzleHttp\Utils;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 use function GuzzleHttp\json_decode;
 
@@ -168,5 +171,54 @@ class StoreController extends Controller
         $defaultSubcategories = ItemSubcategories::where('item_categories_id', $item->subcategories->categories->id)->get();
         
         return view('items.view', ['itemData'=>$item, 'categories'=>$categories, 'defaultSubcategories'=>$defaultSubcategories]);
+    }
+
+    public function viewPO(Request $request) {
+        $po = PurchaseOrders::with('purchaseOrderDetails.item')->where('id', $request->query('id'))->first();
+        
+        if (!$po) {
+            abort(404);
+        } else {
+           return view('purchase-orders.view', compact('po'));
+        }
+
+
+        
+
+    }
+
+    public function savePurchaseOrder (Request $request) {
+        try {
+
+            DB::beginTransaction();
+
+            $poHeader = new PurchaseOrders();
+            $poHeader->po_number = strtoupper(Str::random(10));
+            $poHeader->status = 'DRAFT';
+            $poHeader->users_id = Auth::user()->id;
+            $poHeader->save();
+            
+            foreach ($request->poDetails as $row) {
+                $poHeader->purchaseOrderDetails()->create([
+                    'items_id' => $row['item'],
+                    'quantity' => $row['quantity'],
+                    'tentative_total_price' => $row['estimated_price'],
+                    'item_properties' => '[]',
+                    'users_id' => Auth::user()->id,
+                    'uom' => $row['uom']
+                ]);
+            }
+
+            DB::commit();
+
+            return response([
+                'status'=>'ok'
+            ]);
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return response([
+                'message'=>$th->getMessage()
+            ]);
+        }
     }
 }
