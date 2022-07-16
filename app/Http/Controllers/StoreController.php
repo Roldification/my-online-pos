@@ -7,6 +7,7 @@ use App\Models\Items;
 use App\Models\ItemSubcategories;
 use App\Models\PurchaseOrders;
 use App\Models\Store;
+use App\Models\Warehouse;
 use GuzzleHttp\Utils;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -187,10 +188,6 @@ class StoreController extends Controller
         } else {
            return view('purchase-orders.view', compact('po'));
         }
-
-
-        
-
     }
 
     public function savePurchaseOrder (Request $request) {
@@ -226,5 +223,21 @@ class StoreController extends Controller
                 'message'=>$th->getMessage()
             ]);
         }
+    }
+
+    public function manageWarehouses () {
+
+        return view('warehouses.index', []);
+    }
+
+    public function storeWarehouse (Request $request) {
+        Validator::make($request->all(), [
+            'name'=>'required'
+        ])->validate();
+
+        $wh = new Warehouse();
+        $wh->name = $request->name;
+        $wh->can_sell_from_here = $request->can_sell_from_here;
+        $wh->save();
     }
 }

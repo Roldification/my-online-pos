@@ -56,6 +56,10 @@ Route::post('/save-po', [StoreController::class, 'savePurchaseOrder'])->middlewa
 
 Route::get('/view-po', [StoreController::class, 'viewPO'])->middleware('auth');
 
+Route::get('/manage-warehouses', [StoreController::class, 'manageWarehouses'])->middleware('auth');
+
+Route::post('/store-warehouse', [StoreController::class, 'storeWarehouse'])->middleware('auth');
+
 // Route::get('/create-user', function (Request $request) {
 //     return 'hello world';
 // });

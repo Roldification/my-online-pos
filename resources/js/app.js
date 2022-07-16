@@ -34,6 +34,7 @@ Vue.component('items-list', require('./components/partials/items/ItemsList.vue')
 Vue.component('create-purchase-order', require('./components/purchase-orders/CreatePurchaseOrder.vue').default);
 Vue.component('view-purchase-order', require('./components/purchase-orders/ViewPurchaseOrder.vue').default);
 Vue.component('item-view', require('./components/partials/items/ItemView.vue').default);
+Vue.component('create-warehouses', require('./components/warehouses/CreateWarehouses.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
